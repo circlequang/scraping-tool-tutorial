@@ -1,20 +1,20 @@
 var rp = require('request-promise');
-var MAX_PAGE = 20;	// Chỉ lấy tối đa 20 page
+var MAX_PAGE = 20;	// Only scrapping a maximum of 20 pages.
 
 main();
 
 async function main() {
-	let i = 1;	//Biến đếm số trang, số trang bắt đầu là 1 (chứ không phải 0 như vòng lặp bình thường hay dùng)
+	let i = 1;	//The variable counts the number of pages, with the starting page number being 1 (not 0 as in a normal loop).
 	let bool = true;
 	while(bool == true && i <= MAX_PAGE) {
-		bool = await run(i);	//Lấy json data của trang 1
+		bool = await run(i);	//Get the JSON data of page i.
 		i++;	
-		await sleep(1000);		// cho dừng 1000ms
+		await sleep(1000);		// pause for 1000ms
 	}
 	
 }
 
-//Lấy json data của trang thứ [page], chuyển về dạng json
+//Get the JSON data from page [page], convert it to JSON format.
 async function run(page) {
 	let rsHtml = await rp('https://gateway.chotot.com/v1/public/recommender/homepage?fingerprint=55e39f0f-bc10-4262-b21b-96dffc17b4b4&page=' + page);
 	let rs = JSON.parse(rsHtml);
